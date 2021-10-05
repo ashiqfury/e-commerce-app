@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
 	width: 100%;
@@ -15,6 +16,7 @@ const Wrapper = styled.div`
 	width: 40%;
 	padding: 20px;
 	background: white;
+	${mobile({ width: '75%' })}
 `;
 const Title = styled.h1`
 	font-size: 24px;
@@ -35,7 +37,7 @@ const Aggreement = styled.span`
 	margin: 20px 0;
 `;
 const Button = styled.button`
-	width: 30%;
+	width: 40%;
 	padding: 15px 20px;
 	border: none;
 	background: teal;
