@@ -1,0 +1,17 @@
+{
+	"name": "api",
+	"version": "1.0.0",
+	"description": "API for e-commerce application",
+	"main": "index.js",
+	"scripts": {
+		"start": "nodemon index"
+	},
+	"author": "ashiqfury",
+	"license": "ISC",
+	"dependencies": {
+		"dotenv": "^10.0.0",
+		"express": "^4.17.1",
+		"mongoose": "^6.0.9",
+		"nodemon": "^2.0.13"
+	}
+}
