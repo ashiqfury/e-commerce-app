@@ -1,13 +1,14 @@
 const router = require('express').Router();
 const User = require('../models/User');
 const CryptoJS = require('crypto-js');
+const jwt = require('jsonwebtoken');
 
 // register
 router.post('/register', async (req, res) => {
 	const newUser = new User({
 		username: req.body.username,
 		email: req.body.email,
-		password: CryptoJS.AES.encrypt(req.body.password, process.env.PASSWORD_SECRET_KEY),
+		password: CryptoJS.AES.encrypt(req.body.password, process.env.PASSWORD_SECRET_KEY).toString(),
 	});
 
 	try {
@@ -30,7 +31,16 @@ router.post('/login', async (req, res) => {
 		originalPassword !== req.body.password && res.status(401).json('Wrong credectials');
 		const { password, ...others } = user._doc; // all docs in mongodb are saved in _doc folder.
 
-		res.status(200).json(others);
+		const accessToken = jwt.sign(
+			{
+				id: user._id,
+				isAdmin: user.isAdmin,
+			},
+			process.env.JWT_SECRET_KEY,
+			{ expiresIn: '3d' }
+		);
+
+		res.status(200).json({ ...others, accessToken });
 	} catch (err) {
 		res.status(500).json(err);
 	}
