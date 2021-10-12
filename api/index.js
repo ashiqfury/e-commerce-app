@@ -10,14 +10,15 @@ const orderRoute = require('./routes/order');
 const stripeRoute = require('./routes/stripe');
 const app = express();
 
+dotenv.config();
+app.use(cors());
+app.use(express.json()); // accepts json format in post request
+
 mongoose
 	.connect(process.env.MONGO_URI)
 	.then(() => console.log('Database connected successfully!'))
 	.catch((err) => console.log('Connection Failed', err));
 
-dotenv.config();
-app.use(cors());
-app.use(express.json()); // accepts json format in post request
 app.use('/api/auth', authRoute);
 app.use('/api/users', userRoute);
 app.use('/api/products', productRoute);

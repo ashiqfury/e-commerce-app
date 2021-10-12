@@ -27,16 +27,19 @@ export const categories = [
 		id: 1,
 		img: 'https://images.unsplash.com/photo-1606245131568-de9896c3fdea?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjR8fHBvcnRyYWl0JTIwcGhvdG9ncmFwaHl8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80',
 		title: 'SHIRT STYLE!',
+		cat: 'women',
 	},
 	{
 		id: 2,
 		img: 'https://i.pinimg.com/originals/dd/21/99/dd2199a4dd6c9700133daba1749b4d8d.jpg',
 		title: 'LOUNGEWEAR LOVE',
+		cat: 'coat',
 	},
 	{
 		id: 3,
 		img: 'https://i.pinimg.com/564x/90/2e/f1/902ef1d4460f7718bc0463ede6dc15d3.jpg',
 		title: 'LIGHT JACKETS',
+		cat: 'jeans',
 	},
 ];
 

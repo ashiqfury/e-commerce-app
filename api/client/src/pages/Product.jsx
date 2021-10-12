@@ -5,6 +5,9 @@ import Newsletter from '../components/Newsletter';
 import Footer from '../components/Footer';
 import { Add, Remove } from '@material-ui/icons';
 import { mobile } from '../responsive';
+import { useLocation } from 'react-router';
+import { useEffect, useState } from 'react';
+import { publicRequest } from '../requestMethods';
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -103,49 +106,70 @@ const Button = styled.button`
 `;
 
 const Product = () => {
+	const location = useLocation();
+	const id = location.pathname.split('/')[2];
+	const [product, setProduct] = useState({});
+	const [quantity, setQuantity] = useState(1);
+	const [color, setColor] = useState('');
+	const [size, setSize] = useState('');
+
+	useEffect(() => {
+		const getProducts = async () => {
+			try {
+				const res = await publicRequest.get(`/products/find/${id}`);
+				setProduct(res.data);
+			} catch (err) {}
+		};
+		getProducts();
+	}, [id]);
+
+	const handleQuantity = (type) => {
+		if (type === 'dec') {
+			quantity > 1 && setQuantity(quantity - 1);
+		} else {
+			setQuantity(quantity + 1);
+		}
+	};
+
+	const handleClick = () => {
+		// update to cart
+	};
+
 	return (
 		<Container>
 			<Navbar />
 			<Announcement />
 			<Wrapper>
 				<ImgContainer>
-					<Image src="https://images.unsplash.com/photo-1583433306546-ded68847fd0d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZmFzaGlvbiUyMGRyZXNzfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60" />
+					<Image src={product.img} />
 				</ImgContainer>
 				<InfoContainer>
-					<Title>Denim Jumpsuit</Title>
-					<Desc>
-						I dont want to create a lorem ipsum sentence beacuse everyone uses it to do things
-						quicker but i dont like that thing, I want to become more unique so write this paragraph
-						instead of boring lorem ipsum sentence. I know this is not enough, so that i am typing a
-						paragraph that makes no sence. But I want even more bulky paragraph. So I need to type
-						more and more to make this sentence big enough.
-					</Desc>
-					<Price>Rs. 149/-</Price>
+					<Title>{product.title}</Title>
+					<Desc>{product.desc}</Desc>
+					<Price>Rs. {product.price}/-</Price>
 					<FilterContainer>
 						<Filter>
 							<FilterTitle>Color</FilterTitle>
-							<FilterColor color="black" />
-							<FilterColor color="darkblue" />
-							<FilterColor color="gray" />
+							{product.color?.map((c) => (
+								<FilterColor color={c} key={c} onClick={() => setColor(c)} />
+							))}
 						</Filter>
 						<Filter>
 							<FilterTitle>Size</FilterTitle>
-							<FilterSize>
-								<FilterSizeOption>XS</FilterSizeOption>
-								<FilterSizeOption>S</FilterSizeOption>
-								<FilterSizeOption>M</FilterSizeOption>
-								<FilterSizeOption>L</FilterSizeOption>
-								<FilterSizeOption>XL</FilterSizeOption>
+							<FilterSize onChange={(e) => setSize(e.target.value)}>
+								{product.size?.map((s) => (
+									<FilterSizeOption key={s}>{s}</FilterSizeOption>
+								))}
 							</FilterSize>
 						</Filter>
 					</FilterContainer>
 					<AddContainer>
 						<AmountContainer>
-							<Remove />
-							<Amount>1</Amount>
-							<Add />
+							<Remove onClick={() => handleQuantity('dec')} style={{ cursor: 'pointer' }} />
+							<Amount>{quantity}</Amount>
+							<Add onClick={() => handleQuantity('inc')} style={{ cursor: 'pointer' }} />
 						</AmountContainer>
-						<Button>ADD TO CART</Button>
+						<Button onClick={handleClick}>ADD TO CART</Button>
 					</AddContainer>
 				</InfoContainer>
 			</Wrapper>
