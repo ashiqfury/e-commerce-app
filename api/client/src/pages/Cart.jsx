@@ -4,6 +4,11 @@ import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import { mobile } from '../responsive';
+import { useSelector } from 'react-redux';
+import StripeCheckout from 'react-stripe-checkout';
+import { useState } from 'react';
+
+const KEY = process.env.REACT_APP_STRIPE;
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -66,7 +71,9 @@ const Details = styled.div`
 	padding: 20px;
 	justify-content: space-around;
 `;
-const ProductName = styled.span``;
+const ProductName = styled.span`
+	text-transform: capitalize;
+`;
 const ProductId = styled.span``;
 const ProductColor = styled.span`
 	width: 20px;
@@ -131,6 +138,12 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+	const cart = useSelector((state) => state.cart);
+	const [stripeToken, setStripeToken] = useState(null);
+	const onToken = (token) => {
+		setStripeToken(token);
+	};
+	console.log(stripeToken);
 	return (
 		<Container>
 			<Navbar />
@@ -140,84 +153,77 @@ const Cart = () => {
 				<Top>
 					<TopButton>CONTINUE SHOPPING</TopButton>
 					<TopTexts>
-						<TopText>Shopping Bag(2)</TopText>
+						<TopText>Shopping Bag({cart.quantity})</TopText>
 						<TopText>Your Wishlist(0)</TopText>
 					</TopTexts>
 					<TopButton type="filled">CHECKOUT NOW</TopButton>
 				</Top>
 				<Bottom>
 					<Info>
-						<Product>
-							<ProductDetail>
-								<Image src="https://images.pexels.com/photos/1537671/pexels-photo-1537671.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
-								<Details>
-									<ProductName>
-										<strong>Product:</strong>MICHEL JACKSON SHOES
-									</ProductName>
-									<ProductId>
-										<strong>ID:</strong>45855517515578
-									</ProductId>
-									<ProductColor color="goldenrod" />
-									<ProductSize>
-										<strong>Size:</strong> 22
-									</ProductSize>
-								</Details>
-							</ProductDetail>
-							<PriceDetail>
-								<ProductAmountContainer>
-									<Add />
-									<ProductAmount>2</ProductAmount>
-									<Remove />
-								</ProductAmountContainer>
-								<ProductPrice>Rs. 249/-</ProductPrice>
-							</PriceDetail>
-						</Product>
+						{cart.products.map((product) => (
+							<Product>
+								<ProductDetail>
+									<Image src={product.img} />
+									<Details>
+										<ProductName>
+											<strong>Product: </strong>
+											{product.title}
+										</ProductName>
+										<ProductId>
+											<strong>ID: </strong>
+											{product._id}
+										</ProductId>
+										<ProductColor color={product.color} />
+										<ProductSize>
+											<strong>Size: </strong> {product.size}
+										</ProductSize>
+									</Details>
+								</ProductDetail>
+								<PriceDetail>
+									<ProductAmountContainer>
+										<Add />
+										<ProductAmount>{product.quantity}</ProductAmount>
+										<Remove />
+									</ProductAmountContainer>
+									<ProductPrice>Rs. {product.price * product.quantity}/-</ProductPrice>
+								</PriceDetail>
+							</Product>
+						))}
 						<Hr />
-						<Product>
-							<ProductDetail>
-								<Image src="https://images.pexels.com/photos/2857040/pexels-photo-2857040.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
-								<Details>
-									<ProductName>
-										<strong>Product:</strong>ELON MUSK SHOES
-									</ProductName>
-									<ProductId>
-										<strong>ID:</strong>858654875489
-									</ProductId>
-									<ProductColor color="black" />
-									<ProductSize>
-										<strong>Size:</strong> L
-									</ProductSize>
-								</Details>
-							</ProductDetail>
-							<PriceDetail>
-								<ProductAmountContainer>
-									<Add />
-									<ProductAmount>1</ProductAmount>
-									<Remove />
-								</ProductAmountContainer>
-								<ProductPrice>Rs. 329/-</ProductPrice>
-							</PriceDetail>
-						</Product>
 					</Info>
 					<Summary>
 						<SummaryTitle>ORDER SUMMARY</SummaryTitle>
 						<SummaryItem>
 							<SummaryItemTitle>Subtotal</SummaryItemTitle>
-							<SummaryItemPrice>Rs. 795/-</SummaryItemPrice>
+							<SummaryItemPrice>Rs. {cart.total}/-</SummaryItemPrice>
 						</SummaryItem>
 						<SummaryItem>
 							<SummaryItemTitle>Estimated Shipping</SummaryItemTitle>
-							<SummaryItemPrice>Rs. 49/-</SummaryItemPrice>
+							<SummaryItemPrice>Rs. {parseInt((cart.total / 100) * 10)}/-</SummaryItemPrice>
 						</SummaryItem>
 						<SummaryItem>
 							<SummaryItemTitle>Shipping Discount</SummaryItemTitle>
-							<SummaryItemPrice>Rs. -39/-</SummaryItemPrice>
+							<SummaryItemPrice>Rs. -{parseInt((cart.total / 100) * 8)}/-</SummaryItemPrice>
 						</SummaryItem>
 						<SummaryItem type="total">
 							<SummaryItemTitle>Total</SummaryItemTitle>
-							<SummaryItemPrice>Rs. 805/-</SummaryItemPrice>
+							<SummaryItemPrice>
+								Rs.{' '}
+								{cart.total + parseInt((cart.total / 100) * 10) - parseInt((cart.total / 100) * 8)}
+								/-
+							</SummaryItemPrice>
 						</SummaryItem>
-						<Button>CHECKOUT NOW</Button>
+						<StripeCheckout
+							name="E-com Fury."
+							image="https://images.unsplash.com/photo-1452721226468-f95fb66ebf83?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8aGFtc3RlcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+							billingAddress
+							shippingAddress
+							amount={cart.total * 100}
+							token={onToken}
+							stripeKey={KEY}
+						>
+							<Button>CHECKOUT NOW</Button>
+						</StripeCheckout>
 					</Summary>
 				</Bottom>
 			</Wrapper>
