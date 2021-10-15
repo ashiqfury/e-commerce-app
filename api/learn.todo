@@ -2,8 +2,8 @@
 
 
 ✔ Styled Components @done(21-10-12 12:01)
-✔ Redux @done(21-10-12 12:00)
-☐ Redux Toolkit @started(21-10-12 12:01)
+✘ Redux @cancelled(21-10-15 08:38)
+✔ Redux Toolkit @started(21-10-12 12:01) @done(21-10-15 08:38) @lasted(2d20h37m25s)
 ✘ Material UI @cancelled(21-10-12 12:02)
 ✔ Json Web Tokens (JWT) @done(21-10-12 12:00)
 ✔ Stripe Library (payment) @done(21-10-12 12:00)
