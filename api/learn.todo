@@ -4,7 +4,12 @@
 ✔ Styled Components @done(21-10-12 12:01)
 ✘ Redux @cancelled(21-10-15 08:38)
 ✔ Redux Toolkit @started(21-10-12 12:01) @done(21-10-15 08:38) @lasted(2d20h37m25s)
-✘ Material UI @cancelled(21-10-12 12:02)
+☐ Material UI
 ✔ Json Web Tokens (JWT) @done(21-10-12 12:00)
 ✔ Stripe Library (payment) @done(21-10-12 12:00)
 ✘ Mongo Aggregate Function @cancelled(21-10-12 12:01)
+☐ useLocation Hook
+✔ useSelector Hook @done(21-10-15 10:31)
+☐ useHistory Hook
+✔ useDispatch Hook @done(21-10-15 10:31)
+✘ Redux persistor @cancelled(21-10-15 10:30)
