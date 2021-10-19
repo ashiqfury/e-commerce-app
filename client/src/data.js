@@ -1,21 +1,26 @@
+// purepng.com pixelsquid.com
+
 export const sliderItems = [
 	{
 		id: 1,
-		img: 'https://cdn.pixabay.com/photo/2018/01/17/01/43/portrait-3087255_960_720.jpg',
+		// img: 'https://cdn.pixabay.com/photo/2018/01/17/01/43/portrait-3087255_960_720.jpg',
+		img: 'https://purepng.com/public/uploads/large/purepng.com-fashion-girlwomenpeoplepersonsfemalefashion-1121525113754zgosx.png',
 		title: 'SUMMER SALE',
 		desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% FOR NEW ARRIVALS.",
 		bg: 'f5fafd',
 	},
 	{
 		id: 2,
-		img: 'https://c4.wallpaperflare.com/wallpaper/92/825/215/portrait-display-women-brunette-gray-eyes-wallpaper-preview.jpg',
+		// img: 'https://c4.wallpaperflare.com/wallpaper/92/825/215/portrait-display-women-brunette-gray-eyes-wallpaper-preview.jpg',
+		img: 'https://purepng.com/public/uploads/large/purepng.com-young-woman-in-fashion-flying-fabric-dressfashionpeoplegirlwomenwomansexyladyfemaleattractivemodern-631522936132rcgr0.png',
 		title: 'WINTER SALE',
 		desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% FOR NEW ARRIVALS.",
 		bg: 'fcf1ed',
 	},
 	{
 		id: 3,
-		img: 'https://i.pinimg.com/originals/a2/47/4e/a2474e36462e113f3ca18e133b1c1ed6.jpg',
+		// img: 'https://i.pinimg.com/originals/a2/47/4e/a2474e36462e113f3ca18e133b1c1ed6.jpg',
+		img: 'https://purepng.com/public/uploads/large/purepng.com-fashion-girlwomenpeoplepersonsfemalefashion-1121525113556ha6m9.png',
 		title: 'POPULAR SALE',
 		desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% FOR NEW ARRIVALS.",
 		bg: 'fbf0f4',
